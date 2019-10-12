@@ -1,5 +1,6 @@
 import React from "react";
 import "./menu-item.styles.scss";
+import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 
 function MenuItem({ title, imageUrl, size, history, match, linkUrl }) {
@@ -11,7 +12,7 @@ function MenuItem({ title, imageUrl, size, history, match, linkUrl }) {
       <div
         className="background-image"
         style={{ backgroundImage: `url(${imageUrl})` }}
-      ></div>
+      />
       <div className="content">
         <h1 className="title">{title.toUpperCase()}</h1>
         <span className="subtitle">SHOP NOW</span>
@@ -19,4 +20,12 @@ function MenuItem({ title, imageUrl, size, history, match, linkUrl }) {
     </div>
   );
 }
+MenuItem.propTypes = {
+  title: PropTypes.string.isRequired,
+  imageUrl: PropTypes.string.isRequired,
+  size: PropTypes.string,
+  history: PropTypes.object,
+  match: PropTypes.object,
+  linkUrl: PropTypes.string
+};
 export default withRouter(MenuItem);
