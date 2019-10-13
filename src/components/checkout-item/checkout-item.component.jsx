@@ -7,7 +7,7 @@ import {
   removeItem
 } from "../../redux/cart/cart.actions";
 import { connect } from "react-redux";
-function CheckoutItem({ cartItem, dispatch, addItem, removeItem }) {
+function CheckoutItem({ cartItem, clearItemFromCart, addItem, removeItem }) {
   let { imageUrl, price, name, quantity } = cartItem;
   return (
     <div className="checkout-item">
@@ -27,7 +27,7 @@ function CheckoutItem({ cartItem, dispatch, addItem, removeItem }) {
       <div className="price">{price}</div>
       <div
         className="remove-button"
-        onClick={() => dispatch(clearItemFromCart(cartItem))}
+        onClick={() => clearItemFromCart(cartItem)}
       >
         &#10005;
       </div>
@@ -36,13 +36,15 @@ function CheckoutItem({ cartItem, dispatch, addItem, removeItem }) {
 }
 CheckoutItem.propTypes = {
   cartItem: PropTypes.object.isRequired,
-  dispatch: PropTypes.func.isRequired,
+  dispatch: PropTypes.func,
   addItem: PropTypes.func.isRequired,
-  removeItem: PropTypes.func.isRequired
+  removeItem: PropTypes.func.isRequired,
+  clearItemFromCart: PropTypes.func.isRequired
 };
 const mapDispatchToProps = dispatch => ({
   addItem: item => dispatch(addItem(item)),
-  removeItem: item => dispatch(removeItem(item))
+  removeItem: item => dispatch(removeItem(item)),
+  clearItemFromCart: cartItem => dispatch(clearItemFromCart(cartItem))
 });
 export default connect(
   null,
