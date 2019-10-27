@@ -8,7 +8,7 @@ import {
 } from "../../redux/cart/cart.selectors";
 import { connect } from "react-redux";
 import CheckoutItem from "../../components/checkout-item/checkout-item.component";
-import StripeCheckout from "react-stripe-checkout";
+import StripeCheckoutButton from "../../components/stripe-button/stripe-button.component";
 
 function Checkout({ cartItems, total }) {
   return (
@@ -41,7 +41,7 @@ function Checkout({ cartItems, total }) {
         <br />
         4242 4242 4242 4242 - Exp: 01/20 - CVV: 123
       </div>
-      <StripeCheckout price={total} />
+      <StripeCheckoutButton price={total} />
     </div>
   );
 }
