@@ -5,38 +5,17 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import ShopPage from "./pages/shop/shop.component";
 import Header from "./components/header/header.component";
 import SignInAndSignUpPage from "./pages/sign-in-and-sign-up/sign-in-and-sign-up.component";
-import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
-import { setCurrentUser } from "./redux/user/user.actions";
 import { createStructuredSelector } from "reselect";
 import { connect } from "react-redux";
 import { selectCurrentUser } from "./redux/user/user.selectors";
+import { checkUserSession } from "./redux/user/user.actions";
 import Checkout from "./pages/checkout/checkout.component";
 import PropTypes from "prop-types";
 class App extends React.Component {
   unsubscribeFromAuth = null;
   async componentDidMount() {
-    let { setCurrentUser } = this.props;
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(async authUser => {
-      if (authUser) {
-        const userRef = await createUserProfileDocument(authUser);
-        userRef.onSnapshot(snapShot => {
-          setCurrentUser({
-            id: snapShot.id,
-            ...snapShot.data()
-          });
-        });
-      } else {
-        setCurrentUser(authUser);
-
-        // addCollectionAndDocuments(
-        //   "collections",
-        //   collectionArray.map(({ title, items }) => ({ title, items }))
-        // );
-      }
-    });
-  }
-  componentWillUnmount() {
-    this.unsubscribeFromAuth();
+    let { checkUserSession } = this.props;
+    checkUserSession();
   }
   render() {
     let { currentUser } = this.props;
@@ -68,12 +47,14 @@ const mapStateToProps = createStructuredSelector({
   // collectionArray: selectCollectionsForPreview
 });
 const mapDispatchToProps = dispatch => ({
-  setCurrentUser: user => dispatch(setCurrentUser(user))
+  // setCurrentUser: user => dispatch(setCurrentUser(user))
+  checkUserSession: () => dispatch(checkUserSession())
 });
 
 App.propTypes = {
   setCurrentUser: PropTypes.func,
-  currentUser: PropTypes.object
+  currentUser: PropTypes.object,
+  checkUserSession: PropTypes.func
 };
 
 export default connect(
