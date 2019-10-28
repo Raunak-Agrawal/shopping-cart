@@ -2,12 +2,16 @@ import React from "react";
 
 import FormInput from "../form-input/form-input.component";
 import CustomButton from "../custom-button/custom-button.component";
+import PropTypes from "prop-types";
 
 import "./sign-up.styles.scss";
 import { signupStart } from "../../redux/user/user.actions";
 import { connect } from "react-redux";
 
 class SignUp extends React.Component {
+  static propTypes = {
+    signupStart: PropTypes.func
+  };
   constructor(props) {
     super(props);
 
