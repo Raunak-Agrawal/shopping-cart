@@ -1,13 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { selectCollection } from "../../redux/shop/shop.selectors";
 import { connect } from "react-redux";
 import CollectionItem from "../../components/collection-item/collection-item.component";
 import "./collection.styles.scss";
-
-function CollectionPage({ collection }) {
+function CollectionPage({ match, collection }) {
   let { title, items } = collection;
-  // console.log(collection);
   return (
     <div className="collection-page">
       <h2 className="title">{title}</h2>
@@ -27,5 +25,9 @@ CollectionPage.propTypes = {
 const mapStateToProps = (state, ownProps) => ({
   collection: selectCollection(ownProps.match.params.collectionId)(state)
 });
+const mapDispatchToProps = () => ({});
 
-export default connect(mapStateToProps)(CollectionPage);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CollectionPage);
